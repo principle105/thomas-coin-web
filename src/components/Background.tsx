@@ -1,35 +1,36 @@
+import { Suspense, useMemo, useRef } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { TextureLoader, BufferAttribute } from "three";
+
 import star from "../assets/star.png";
-import { TextureLoader, BufferAttribute, Euler } from "three";
-import { Suspense, useMemo, useRef, useState } from "react";
 
 const Points = () => {
+    const count = 5500;
+    const speed = 0.8;
+    const rotationAmount = 0.003;
+
     const starImg = useLoader(TextureLoader, star);
 
     const bufferRef = useRef<BufferAttribute>(null!);
-    const [rotation, setRotation] = useState<number>(0);
-
-    const count = 6000;
+    const pointRef = useRef<THREE.Points>(null!);
 
     useFrame(() => {
         if (!bufferRef.current) return;
 
-        bufferRef;
-
         for (let i = 0; i < count; i++) {
-            let y = bufferRef.current.getY(i) - 0.8;
+            let y = bufferRef.current.getY(i) - speed;
 
-            if (y < -200) y = 200;
+            if (y < -300) y = 200;
 
             bufferRef.current.setY(i, y);
         }
 
-        setRotation((prev) => prev + 0.003);
+        pointRef.current.rotation.y += rotationAmount;
 
         bufferRef.current.needsUpdate = true;
     });
 
-    let positions = useMemo(() => {
+    let starPositions = useMemo(() => {
         let positions = [];
 
         for (let i = 0; i < count; i++) {
@@ -44,13 +45,13 @@ const Points = () => {
     }, []);
 
     return (
-        <points rotation={new Euler(0, rotation, 0)}>
+        <points ref={pointRef}>
             <bufferGeometry attach="geometry">
                 <bufferAttribute
                     ref={bufferRef}
                     attach="attributes-position"
-                    array={positions}
-                    count={positions.length / 3}
+                    array={starPositions}
+                    count={starPositions.length / 3}
                     itemSize={3}
                 />
             </bufferGeometry>

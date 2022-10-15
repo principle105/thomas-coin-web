@@ -4,18 +4,18 @@ import Background from "../components/Background.jsx";
 ---
 
 <Layout title="Thomas Coin">
-    <div>
-        <Background client:idle />
-    </div>
+    <Background client:idle />
     <main class="grid place-items-center h-screen">
         <div class="flex flex-col gap-16 text-center text-white [&>*]:m-auto">
             <div>
                 <h1 class="text-6xl">Thomas Coin</h1>
-                <p class="text-zinc-400 text-xl">The final currency...</p>
+                <p class="text-zinc-400 text-xl italic">
+                    The final currency...
+                </p>
             </div>
             <img src="/logo.svg" class="w-64 h-64" alt="Thomas coin logo" />
             <a
-                class="transition ease-in-out delay-50 bg-indigo-600 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 font-bold py-3 px-6 rounded-lg"
+                class="transition ease-in-out bg-gradient-to-tr from-indigo-600 to-purple-500 hover:-translate-y-1 hover:scale-110 hover:from-indigo-500 hover:to-purple-400 duration-300 font-bold py-3.5 px-6 rounded-lg"
                 href="https://github.com/principle105/thomas-coin"
                 target="_blank"
             >
