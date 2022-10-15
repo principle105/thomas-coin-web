@@ -6,8 +6,8 @@ import star from "../assets/star.png";
 
 const Points = () => {
     const count = 5500;
-    const speed = 0.8;
     const rotationAmount = 0.003;
+    let speed = 8;
 
     const starImg = useLoader(TextureLoader, star);
 
@@ -26,6 +26,8 @@ const Points = () => {
         }
 
         pointRef.current.rotation.y += rotationAmount;
+
+        if (pointRef.current.rotation.y > 0.25) speed = 0.8;
 
         bufferRef.current.needsUpdate = true;
     });
