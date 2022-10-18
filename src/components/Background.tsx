@@ -4,10 +4,15 @@ import { TextureLoader, BufferAttribute } from "three";
 
 import star from "../assets/star.png";
 
-const Points = () => {
-    const count = 5500;
+interface PointsProps {
+    count: number;
+    size: number;
+    speed: number;
+}
+
+const Points = ({ count, size, speed }: PointsProps) => {
     const rotationAmount = 0.003;
-    let speed = 8;
+    let currentSpeed = 8;
 
     const starImg = useLoader(TextureLoader, star);
 
@@ -18,16 +23,16 @@ const Points = () => {
         if (!bufferRef.current) return;
 
         for (let i = 0; i < count; i++) {
-            let y = bufferRef.current.getY(i) - speed;
+            let y = bufferRef.current.getY(i) - currentSpeed;
 
-            if (y < -300) y = 200;
+            if (y < -400) y = 200;
 
             bufferRef.current.setY(i, y);
         }
 
         pointRef.current.rotation.y += rotationAmount;
 
-        if (pointRef.current.rotation.y > 0.25) speed = 0.8;
+        if (pointRef.current.rotation.y > 0.25) currentSpeed = speed;
 
         bufferRef.current.needsUpdate = true;
     });
@@ -61,7 +66,7 @@ const Points = () => {
             <pointsMaterial
                 attach="material"
                 map={starImg}
-                size={0.5}
+                size={size}
                 transparent={false}
                 alphaTest={0.5}
                 opacity={1.0}
@@ -80,7 +85,8 @@ const Background = () => {
                 }}
             >
                 <Suspense fallback={null}>
-                    <Points />
+                    <Points count={5000} size={0.5} speed={0.8} />
+                    <Points count={40} size={3} speed={2} />
                 </Suspense>
             </Canvas>
         </div>
